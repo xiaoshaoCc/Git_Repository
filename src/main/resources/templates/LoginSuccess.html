@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"   lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>校园掌上美食宝管理端</title>
+    <style>
+        .input1{
+            position: absolute;
+            top:510px;
+            left:10px;
+            font-size: 20px;
+
+        }
+        .Title{
+            text-align: center;
+            color: #d3ab26;
+            user-select: none;
+            font-size: 60px;
+        }
+        body {
+            font-family: 幼圆, serif;
+            background-size: cover;
+            margin-top: 100px;
+            font-size: 30px;
+            user-select: none;
+            height: 100%;
+            background-image: url("http://192.168.0.3:8080/static/bac.png");
+        }
+
+        .school-style{
+            font-size: 20px;
+        }
+        .btn{
+            border-radius: 10px;
+            width: 70px;
+            height: 30px;
+            position: absolute;
+            top:350px;
+            left: 10px
+        }
+        .btn2{
+            border-radius: 10px;
+            width: 70px;
+            height: 30px;
+            position: absolute;
+            top:710px;
+            left: 10px
+        }
+
+        .vertical-line {
+
+            border-left: 1px solid #ffffff; /* 设置垂直线的样式和颜色 */
+            height: 67vh; /* 设置线的高度，这里假设是整个视口的高度 */
+
+            position: absolute;
+            top:280px;
+            left:900px
+        }
+        .divs{
+            width: 250px;
+            height: 20px;
+            color: chartreuse;
+            position: absolute;
+            left: 1260px;
+            top:250px
+
+        }
+        table{
+            color: black;
+            font-size: 20px;
+            text-align: center;
+            width: 650px;
+            height: 100px;
+            overflow-y: auto;
+        }
+        table th{
+            background: blue;
+            position: sticky;
+            top:0
+        }
+        table tr,table td{
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./templates/HttpResponse.js"></script>
+    <div class="Title">校园掌上美食宝管理端</div>
+    <br><br><br>
+    <div style="color: chartreuse">学校信息录入</div>
+    <input class="school-style" type="text" id="school_id" name="school_id" placeholder="学校编号">
+    <input class="school-style" type="text" id="school_name" name="school_name" placeholder="学校名称">
+    <button class="btn" type="submit" onclick="a()">上传</button>
+    <br><br><br><br>
+    <div style="color: chartreuse">窗口信息录入</div>
+    <input class="school-style" type="text" th:id="window_id" th:name="window_id" placeholder="窗口编号">
+    <input class="school-style" type="text" th:id="window_name" th:name="window_name" placeholder="窗口名称">
+    <input class="school-style" type="text" th:id="school_id1" th:name="school_id1" placeholder="学校编号">
+    <input class="input1" type="text" th:id="merchant_id" th:name="merchant_id" placeholder="商家编号">
+    <button class="btn2" type="submit" onclick="c()">上传</button>
+    <div>
+        <!--文件预览功能-->
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function () {
+                // 确保DOM完全加载后再访问元素
+
+                let input = document.getElementById("file");
+                let img = document.getElementById("imagePreview");
+
+                input.addEventListener("change", function () {
+                    if (this.files && this.files[0]) {
+                        let reader = new FileReader();
+                        reader.onload = function (e) {
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            });
+        </script>
+        <img id="imagePreview" src="#" alt="暂无" style="width: 100px; height: 100px;position: absolute; border: 1px solid white;  top:550px;left:30px;"/>
+        <input type="file" id="file" name="file" accept="image/*" style="position: absolute; top:660px;left:10px;color: blueviolet;font-size: 20px" />
+    </div>
+    <div class="divs">窗口信息展示</div>
+    <div style="overflow-y:auto;width:650px;height:300px;position: absolute; left: 1050px;top: 310px;overflow-x: hidden">
+        <table id="table">
+            <tr>
+                <th>窗口编号</th><th>窗口图片</th><th>窗口名称</th><th>商户编号</th><th>学校编号</th><th>窗口状态</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+            // 使用Ajax获取JSON数据
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://192.168.0.3:8080/window/windowlist", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 解析JSON数据
+                    var data = JSON.parse(xhr.responseText);
+
+                    // 获取表格元素
+                    var table = document.getElementById("table");
+
+                    // 遍历JSON数据并将数据添加到表格中
+                    for (var i = 0; i < data.length; i++) {
+                        var row = table.insertRow(-1); // -1 表示在最后添加新行
+                        var cell;
+
+                        // 遍历JSON对象的属性并将数据添加到表格单元格中
+                        for (var key in data[i]) {
+                            cell = row.insertCell();
+                            if (key === "window_img") {
+                                var img = document.createElement('img');
+                                img.src = data[i][key];
+                                img.style.heigh = '50px'
+                                img.style.width = '50px'; // 调整图片宽度（可根据需要调整）
+                                cell.appendChild(img);
+                            } else {
+                                cell.innerHTML = data[i][key];
+                            }
+                        }
+                    }
+                }
+            };
+            xhr.send();
+    </script>
+    <div class="vertical-line"></div>
+</body>
+</html>
