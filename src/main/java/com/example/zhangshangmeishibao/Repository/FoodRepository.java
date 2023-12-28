@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,6 +26,10 @@ public interface FoodRepository extends JpaRepository<Food,String> {
     @Transactional
     @Modifying
     public int Foodinsert(String name,Double price,String window_id);
+
+
+    @Query(value = "select food_name from food where food_id=?1",nativeQuery = true)
+    public String GetFood_name(String food_id);
 
 
 

@@ -46,4 +46,9 @@ public class FoodController {
         foodRepository.save(food);
         return "success";
     }
+
+    @GetMapping("/food/get_food_name")
+    public String Get_food_name(@RequestParam String food_id){
+       return foodRepository.GetFood_name(food_id);
+    }
 }

@@ -13,9 +13,19 @@ public class Order {
     @Id
     private String order_id;
     private String user_id;
-    private Date order_date;
+    private String order_date;
     private Double order_price;
     private String order_status;
+
+    private String window_id;
+
+    public String getWindow_id() {
+        return window_id;
+    }
+
+    public void setWindow_id(String window_id) {
+        this.window_id = window_id;
+    }
 
     public String getOrder_id() {
         return order_id;
@@ -33,11 +43,11 @@ public class Order {
         this.user_id = user_id;
     }
 
-    public Date getOrder_date() {
+    public String getOrder_date() {
         return order_date;
     }
 
-    public void setOrder_date(Date order_date) {
+    public void setOrder_date(String order_date) {
         this.order_date = order_date;
     }
 
