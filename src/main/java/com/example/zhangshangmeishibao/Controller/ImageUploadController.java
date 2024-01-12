@@ -1,6 +1,6 @@
 package com.example.zhangshangmeishibao.Controller;
 
-import org.springframework.beans.factory.annotation.Value;
+
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +16,11 @@ import java.nio.file.Paths;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ImageUploadController {
 
-    @Value("${image-upload-path}")
-    private String path;
-
     @PostMapping("/upload")
     public String Upload(@RequestParam("file") MultipartFile multipartFile){
         String filename=multipartFile.getOriginalFilename();
         if (filename != null) {
-            Path filePath = Paths.get("C:\\Users\\23763\\Desktop\\spring-demo\\Zhangshangmeishibao\\src\\\\main\\resources\\Image",filename);
+            Path filePath = Paths.get("/resources/Image",filename);
             try {
                 multipartFile.transferTo(filePath.toFile());
             } catch (IOException e) {
@@ -33,6 +30,5 @@ public class ImageUploadController {
         }else{
             return "上传失败";
         }
-
     }
 }

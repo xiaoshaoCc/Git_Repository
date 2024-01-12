@@ -1,4 +1,6 @@
 
+
+var urls="http://121.40.249.214:8080"
 function b(id,name,url) {
     $.ajax({
         url: url,
@@ -22,7 +24,7 @@ function b(id,name,url) {
 function a(){
     var school_id=document.getElementById("school_id").value;
     var school_name=document.getElementById("school_name").value;
-    var url="http://192.168.0.3:8080/school/insert"
+    var url=urls+"/school/insert"
     if(school_id==="" ||school_name===""){
         alert("编号和名称不能为空");
     }
@@ -37,7 +39,7 @@ function c(){
    var school_id=document.getElementById("school_id1").value;
    var merchant=document.getElementById("merchant_id").value;
    var window_img=document.getElementById("file").files[0].name;
-   var url="http://192.168.0.3:8080/window/insert";
+   var url=urls+"/window/insert";
    if(window_id===""||window_name===""||school_id===""||merchant===""){
        alert("数据填写不完整");
    }else {
@@ -49,7 +51,7 @@ function c(){
                "window_name": window_name,
                "school_id": school_id,
                "merchant": merchant,
-               "window_img":"http://192.168.0.3:8080/Image/"+window_img,
+               "window_img":urls+"/Image/"+window_img,
                "window_status":"关闭"
            }),
            contentType: 'application/json',
@@ -76,7 +78,7 @@ function uploadFile() {
     // 使用Ajax异步上传
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.0.3:8080/upload', // 后端处理上传的URL
+        url: urls+'/upload', // 后端处理上传的URL
         data: formData,
         processData: false,
         contentType: false,

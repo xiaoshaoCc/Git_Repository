@@ -24,7 +24,7 @@
             font-size: 30px;
             user-select: none;
             height: 100%;
-            background-image: url("http://192.168.0.3:8080/static/bac.png");
+            background-image: url("http://121.40.249.214:8080/static/bac.png");
         }
 
         .school-style{
@@ -133,7 +133,7 @@
     <script>
             // 使用Ajax获取JSON数据
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://192.168.0.3:8080/window/windowlist", true);
+            xhr.open("GET", "http://121.40.249.214:8080/window/windowlist", true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // 解析JSON数据
